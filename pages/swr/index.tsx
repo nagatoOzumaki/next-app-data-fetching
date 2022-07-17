@@ -1,7 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { Grid } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { mutate } from 'swr';
 import Post from '../../components/Post';
 import useFetch from '../../utils/useFecth';
 
@@ -12,37 +14,82 @@ export type PostType = {
   title: string;
   body: string;
 };
+
 type PostsType = PostType[];
 type PropsType = { posts: PostsType };
 const Home = ({ posts }: PropsType) => {
-  const [allPosts, setAllPosts] = useState<PostsType>(posts);
+  //   input handling
+  const [newPost, setNewPost] = useState({ title: '', body: '', userId: null });
+  console.log(newPost);
+  const onChangeHandler = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setNewPost({
+      ...newPost,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    axios.post(apiUrl, newPost).catch((er) => console.log(er.message));
+    mutate(apiUrl);
+  };
+  //   data
   const { data, error } = useFetch(apiUrl);
   if (error) return <div>Error</div>;
   if (!data) <div>Loading...</div>;
   else
     return (
       <div>
-        <Grid
-          justifyContent="left"
-          alignItems="stretch"
-          spacing={2}
-          padding={4}
-          sx={{ backgroundColor: '#ddd' }}
-          container
-        >
-          {posts.map((post: PostType) => (
+        <Grid container direction="row" spacing={3}>
+          <Grid md={8} item>
             <Grid
-              key={post.id}
-              md={6}
-              sx={{ alignItems: 'stretch', padding: 2 }}
-              item
+              justifyContent="left"
+              alignItems="stretch"
+              spacing={2}
+              padding={2}
+              sx={{ backgroundColor: '#ddd' }}
+              container
             >
-              <Post post={post} />
-            </Grid>
-          ))}
+              {data.map((post: PostType) => (
+                <Grid
+                  key={post.id}
+                  md={6}
+                  sx={{ alignItems: 'stretch', padding: 2 }}
+                  item
+                >
+                  <Post post={post} />
+                </Grid>
+              ))}
+            </Grid>{' '}
+          </Grid>
+
+          <Grid md={4} item>
+            <form onSubmit={(e) => submitHandler(e)}>
+              <TextField
+                name="title"
+                type="text"
+                onChange={(e) => onChangeHandler(e)}
+              />
+              <TextField
+                name="body"
+                type="text"
+                onChange={(e) => onChangeHandler(e)}
+              />
+              <TextField
+                name="userId"
+                type="number"
+                onChange={(e) => onChangeHandler(e)}
+              />
+              <Button type="submit" color="primary" variant="contained">
+                Submit
+              </Button>
+            </form>
+          </Grid>
         </Grid>
       </div>
     );
+  return null;
 };
 
 export default Home;

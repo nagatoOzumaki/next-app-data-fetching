@@ -10,7 +10,7 @@ type PropsType = { post: PostType };
 
 function Post({ post }: PropsType) {
   return (
-    <Card sx={{ padding: 9, height: '100%' }}>
+    <Card sx={{ padding: 2, height: '100%' }}>
       <Grid spacing={1.3} direction='row' container>
         <Grid item>
           <Typography color='secondary'>{post.id}</Typography>
