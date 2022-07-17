@@ -2,7 +2,7 @@
 import { Grid } from '@mui/material';
 import axios from 'axios';
 import Post from '../../components/Post';
-import useFetch from '../../utils/useFecth';
+import useFetch from '../../utils/useFetch';
 
 const apiUrl = 'http://localhost:4000/posts';
 export type PostType = {

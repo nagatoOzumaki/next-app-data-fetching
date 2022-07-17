@@ -38,7 +38,7 @@ export const getStaticPaths = async () => {
     })
     .catch((er) => console.log(er));
 
-  users = users.slice(0, 4);
+  // users = users.slice(0, 4);
   const paths: { params: { userId: string } }[] = users.map(
     (user: userType) => ({
       params: {
@@ -63,9 +63,10 @@ export const getStaticProps = async ({ params }: any) => {
         props: {
           user,
         },
+        revalidate: 10,
       };
     })
-    .catch((er) => {
+    .catch(() => {
       returnObject = {
         notFound: true,
       };
