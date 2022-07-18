@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-filename-extension */
 import { Link, List, ListItem, Typography } from '@mui/material';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import axios from 'axios';
 import { NextPage } from 'next';
 import NextLink from 'next/link';
 import React from 'react';
+import { usersApi } from '../../services/api';
 import { userType } from './[userId]';
 
 type propsType = { users: userType[] };
@@ -29,12 +28,9 @@ export default Users;
 
 export const getStaticProps = async () => {
   let data: userType[] = [];
-  await axios
-    .get('http://localhost:4000/users')
-    .then((res) => res.data)
-    .then((users) => {
-      data = users;
-    });
+  await usersApi.getAllUsers().then((users) => {
+    data = users;
+  });
 
   return {
     props: { users: data },

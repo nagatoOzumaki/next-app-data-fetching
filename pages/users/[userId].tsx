@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { CircularProgress, Typography } from '@mui/material';
 import { NextPage } from 'next';
-import axios from 'axios';
 import { useRouter } from 'next/router';
+import { usersApi } from '../../services/api';
 
 export interface userType {
   id: number;
@@ -29,15 +29,13 @@ export default User;
 
 export const getStaticPaths = async () => {
   let users: userType[] = [];
-  await axios
-    .get('http://localhost:4000/users/')
-    .then((res) => res.data)
+  await usersApi
+    .getAllUsers()
     .then((data) => {
       users = data;
       console.log(data);
     })
     .catch((er) => console.log(er));
-
   // users = users.slice(0, 4);
   const paths: { params: { userId: string } }[] = users.map(
     (user: userType) => ({
@@ -55,9 +53,8 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }: any) => {
   const { userId } = params;
   let returnObject;
-  await axios
-    .get(`http://localhost:4000/users/${userId}`)
-    .then((res) => res.data)
+  await usersApi
+    .getUser(userId)
     .then((user) => {
       returnObject = {
         props: {

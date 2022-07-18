@@ -1,9 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Grid } from '@mui/material';
-import axios from 'axios';
 import Post from '../../components/Post';
+import { postsApi } from '../../services/api';
 
-const apiUrl = 'http://localhost:4000/posts';
 export type PostType = {
   userId: number;
   id: number;
@@ -44,8 +43,7 @@ const Home = ({ posts }: PropsType) => {
 export default Home;
 
 export const getStaticProps = async () => {
-  const posts = await axios.get(apiUrl).then((res) => res.data);
-
+  const posts = await postsApi.getAllPosts();
   return {
     props: {
       posts,
