@@ -2,6 +2,10 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
+const Button = (name: string) => (
+  <small>this a functinal component {name}</small>
+);
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -11,11 +15,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-      </main>
+      <div className="riad">
+        <h1>ooops</h1>
+        {Button('riad')}
+      </div>
     </div>
   );
 };
