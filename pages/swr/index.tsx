@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Grid } from '@mui/material';
 import axios from 'axios';
+import CustomHead from '../../components/CustomHead';
 import Post from '../../components/Post';
 import useFetch from '../../utils/useFetch';
 
