@@ -43,6 +43,7 @@
     "import/no-unresolved": "off",
     "import/extensions": "off",
     "react/jsx-filename-extension": ["off"],
-    "react/function-component-definition": ["off"]
+    "react/function-component-definition": ["off"],
+    "no-undef": "off"
   }
 }
