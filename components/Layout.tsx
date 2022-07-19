@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { CssBaseline, Container } from '@mui/material';
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { FC } from 'react';
 
 // interface Props {
 //   children: (
@@ -15,6 +15,7 @@ const Layout: FC<Props> = ({ children }) => {
   return (
     <Container sx={{ justifyContent: 'center' }}>
       <CssBaseline />
+      <small>this is global layout</small>
       <h1>Posts</h1>
       {children}
     </Container>
